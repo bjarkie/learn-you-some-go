@@ -7,6 +7,8 @@ func main() {
 	fmt.Println(Hello("bjarki", "ru"))
 }
 
+const englishHelloPrefix = "Hello"
+
 func Hello(name, language string) string {
 	return fmt.Sprintf(
 		"%s, %s",
@@ -30,5 +32,5 @@ func greeting(language string) string {
 		return greeting
 	}
 
-	return "Hello"
+	return englishHelloPrefix
 }

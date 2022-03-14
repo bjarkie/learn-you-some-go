@@ -3,32 +3,29 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
-	gotNoLanguage := Hello("Bjarki", "")
-	wantNoLanguage := "Hello, Bjarki"
-
-	if gotNoLanguage != wantNoLanguage {
-		t.Errorf("got %q want %q", gotNoLanguage, wantNoLanguage)
+	assertCorrectMessage := func(t testing.TB, got, want string) {
+		t.Helper()
+		if got != want {
+			t.Errorf("got %q want %q", got, want)
+		}
 	}
 
-	got := Hello("Bjarki", "es")
-	want := "Hola, Bjarki"
+	t.Run("say hello in Russain", func(t *testing.T) {
+		gotRu := Hello("Bjarki", "ru")
+		wantRu := "Привет, Bjarki"
 
-	if got != want {
-		t.Errorf("got %q want %q", got, want)
-	}
+		assertCorrectMessage(t, gotRu, wantRu)
+	})
+	t.Run("say hello in English if no language is selected", func(t *testing.T) {
+		gotNoLanguage := Hello("Bjarki", "")
+		wantNoLanguage := "Hello, Bjarki"
 
-	gotJa := Hello("Bjarki", "ja")
-	wantJa := "こんにちは, Bjarki"
+		assertCorrectMessage(t, gotNoLanguage, wantNoLanguage)
+	})
+	t.Run("say hello in Japanese ", func(t *testing.T) {
+		gotJa := Hello("Bjarki", "ja")
+		wantJa := "こんにちは, Bjarki"
 
-	if gotJa != wantJa {
-		t.Errorf("got %q want %q", gotJa, wantJa)
-	}
-
-	gotRu := Hello("Bjarki", "ru")
-	wantRu := "Привет, Bjarki"
-
-	if gotRu != wantRu {
-		t.Errorf("got %q want %q", gotRu, wantRu)
-	}
-
+		assertCorrectMessage(t, gotJa, wantJa)
+	})
 }
