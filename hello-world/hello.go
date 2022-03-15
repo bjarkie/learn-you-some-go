@@ -22,6 +22,7 @@ var greetings = map[string]string{
 	"fr": "Bonjour",
 	"ru": "Привет",
 	"ja": "こんにちは",
+	"de": "Guten Tag",
 	//etc..
 }
 
