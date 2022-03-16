@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 )
 
@@ -16,6 +17,7 @@ func TestCountdown(t *testing.T) {
 1
 Go!`
 
+	fmt.Println("the countdown string", want)
 	if got != want {
 		t.Errorf("got %q want %q", got, want)
 	}
