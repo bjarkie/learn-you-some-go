@@ -2,14 +2,22 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"testing"
 )
 
+type ObservableSleeper struct {
+	Calls int
+}
+
+func (s *ObservableSleeper) Sleep() {
+	s.Calls++
+}
+
 func TestCountdown(t *testing.T) {
 	buffer := &bytes.Buffer{}
+	observableSleeper := &ObservableSleeper{}
 
-	Countdown(buffer)
+	Countdown(buffer, observableSleeper)
 
 	got := buffer.String()
 	want := `3
@@ -17,8 +25,11 @@ func TestCountdown(t *testing.T) {
 1
 Go!`
 
-	fmt.Println("the countdown string", want)
 	if got != want {
 		t.Errorf("got %q want %q", got, want)
+	}
+
+	if observableSleeper.Calls != 4 {
+		t.Errorf("not enough calls to sleeper, want 4 got %d", observableSleeper.Calls)
 	}
 }
