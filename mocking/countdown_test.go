@@ -31,24 +31,21 @@ const write = "write"
 const sleep = "sleep"
 
 func TestCountdown(t *testing.T) {
-	buffer := &bytes.Buffer{}
-	observableSleeper := &ObservableSleeper{}
 
-	Countdown(buffer, observableSleeper)
+	t.Run("prints 3 to Go!", func(t *testing.T) {
+		buffer := &bytes.Buffer{}
+		Countdown(buffer, &ObservableCountdownOperations{})
 
-	got := buffer.String()
-	want := `3
+		got := buffer.String()
+		want := `3
 2
 1
 Go!`
 
-	if got != want {
-		t.Errorf("got %q want %q", got, want)
-	}
-
-	if observableSleeper.Calls != 4 {
-		t.Errorf("not enough calls to sleeper, want 4 got %d", observableSleeper.Calls)
-	}
+		if got != want {
+			t.Errorf("got %q want %q", got, want)
+		}
+	})
 
 	t.Run("sleep before every print", func(t *testing.T) {
 		observableSleepPrinter := &ObservableCountdownOperations{}
@@ -69,5 +66,4 @@ Go!`
 			t.Errorf("wanted calls %v got %v", want, observableSleepPrinter.Calls)
 		}
 	})
-
 }
