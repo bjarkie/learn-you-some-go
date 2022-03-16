@@ -1,7 +1,6 @@
 package dictionary
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -43,13 +42,25 @@ func TestAdd(t *testing.T) {
 		newDefinition := "new definition"
 		dictionary := Dictionary{word: definition}
 
-		fmt.Println("Before:", dictionary)
+		// fmt.Println("Before:", dictionary)
 		err := dictionary.Update(word, newDefinition)
-		fmt.Println("After:", dictionary)
+		// fmt.Println("After:", dictionary)
 
 		assertError(t, err, nil)
 		assertDefinition(t, dictionary, word, newDefinition)
 	})
+}
+
+func TestDelete(t *testing.T) {
+	word := "test"
+	dictionary := Dictionary{word: "test definition"}
+
+	dictionary.Delete(word)
+
+	_, err := dictionary.Search(word)
+	if err != ErrNotFound {
+		t.Errorf("Expected %q to be deleted", word)
+	}
 }
 
 func assertDefinition(t testing.TB, dictionary Dictionary, word, definition string) {
