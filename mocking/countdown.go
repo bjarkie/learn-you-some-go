@@ -22,11 +22,9 @@ func (d *DefaultSleeper) Sleep() {
 func Countdown(out io.Writer, sleeper Sleeper) {
 	for i := countdownStart; i > 0; i-- {
 		sleeper.Sleep()
-		// time.Sleep(1 * time.Second)
 		fmt.Fprintln(out, i)
 	}
 
 	sleeper.Sleep()
-	// time.Sleep(1 * time.Second)
 	fmt.Fprint(out, finalWord)
 }
