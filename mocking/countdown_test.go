@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"reflect"
 	"testing"
+	"time"
 )
 
 type ObservableSleeper struct {
@@ -66,4 +67,16 @@ Go!`
 			t.Errorf("wanted calls %v got %v", want, observableSleepPrinter.Calls)
 		}
 	})
+}
+
+func TestConfigurableSleeper(t *testing.T) {
+	sleepTime := 5 * time.Second
+
+	observableTime := &ObservableTime{}
+	sleeper := ConfigurableSleeper{sleepTime, observableTime.Sleep}
+	sleeper.Sleep()
+
+	if observableTime.durationSlept != sleepTime {
+		t.Errorf("should have slept for %v but slept for %v", sleepTime, observableTime.durationSlept)
+	}
 }
